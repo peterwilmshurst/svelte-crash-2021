@@ -1,65 +1,30 @@
 <script>
-	let firstName = 'Peter';
-	let lastName = 'Wilmshurst';
-	let color = 'blue'
-	let showText = false
-	let users = [
+	import Feedbacklist from './components/feedbacklist.svelte';
+import FeedbackList from './components/feedbacklist.svelte';
+	let feedback = [
 		{
-			id: '1',
-			name: 'John'
+			id: 1,
+			rating: 10,
+			text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque nemo consequuntur, voluptas velit earum animi ratione magnam eius, nobis qui eligendi hic, vero inventore? Ab dolorem laborum fugiat aut voluptatem.', 
 		},
 		{
-			id: '2',
-			name: 'Sara'
+			id: 2,
+			rating: 9,
+			text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque nemo consequuntur, voluptas velit earum animi ratione magnam eius, nobis qui eligendi hic, vero inventore? Ab dolorem laborum fugiat aut voluptatem.', 
 		},
 		{
-			id: '3',
-			name: 'Bob'
-
-		},
+			id: 3,
+			rating: 8,
+			text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque nemo consequuntur, voluptas velit earum animi ratione magnam eius, nobis qui eligendi hic, vero inventore? Ab dolorem laborum fugiat aut voluptatem.', 
+		}
 	]
 
-	$: name = firstName + ' ' + lastName
-
-	const toggle = () => {
-		color = color === 'blue' ? 'red' : 'blue'
-		showText = !showText
-		/* users = [...users, { id: '4', name: 'Jen'}] */
+	const deleteFeedback = (e) => {
+		const itemId = e.detail
+		feedback = feedback.filter((item) => item.id != itemId)
 	}
 </script>
 
-<main>
-	<h1 style="color: {color}">Hello {name}!</h1>
-	{#if showText}
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-	{:else}
-	<p>No Text</p>
-	{/if}
-	<button on:click={toggle}>Click</button>
-
-	{#each users as user (user.id)}
-	<h3>{user.id}: {user.name}</h3>
-	{/each}
+<main class='container'>
+	<Feedbacklist {feedback} on:delete-feedback={deleteFeedback} />
 </main>
-
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
